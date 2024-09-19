@@ -2,8 +2,6 @@ package hellojpa;
 
 import jakarta.persistence.*;
 
-import java.util.List;
-
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
@@ -13,16 +11,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-//            Member findMember = em.find(Member.class, 1L);
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+            // 비영속
+            Member member = new Member();
+            member.setId(1L);
+            member.setName("HelloJPA");
 
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
+            // 영속 상태 (엔티티 매니저 안에 있는 영속성 컨텍스트를 통해서 멤버가 관리된다는 뜻)
+            em.persist(member);
 
+            // 커밋찍는 시점에 쿼리가 날라간다.
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
