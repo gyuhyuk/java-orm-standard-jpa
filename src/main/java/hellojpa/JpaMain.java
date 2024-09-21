@@ -11,12 +11,16 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member(200L, "member200");
-            em.persist(member);
+            Member member = em.find(Member.class, 150L);
+            member.setName("AAAAA");
 
-            em.flush();
+            // 영속성 컨텍스트에서 빠진다. -> update 쿼리가 나가지 않고, select 쿼리만 나간다.
+            em.detach(member);
 
-            System.out.println("================");
+            // 엔티티 매니저 안에 있는 영속성 컨텍스트를 통째로 없앤다. -> select 쿼리만 나간다.
+            em.clear();
+
+            System.out.println("=====================");
 
             tx.commit();
         } catch (Exception e) {
