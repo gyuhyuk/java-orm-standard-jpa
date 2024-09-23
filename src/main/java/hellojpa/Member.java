@@ -23,6 +23,10 @@ public class Member {
         return id;
     }
 
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -37,9 +41,5 @@ public class Member {
 
     public Team getTeam() {
         return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
     }
 }
