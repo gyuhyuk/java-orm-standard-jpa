@@ -12,13 +12,11 @@ public class Team {
     @Column(name = "TEAM_ID")
     private Long id;
     private String name;
+
+    // 이게 추가 된다고 해서 DB에 영향을 주지 않는다.
+    // 읽기만 하기 때문
     @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
-
-    public void addMember(Member member) {
-        member.setTeam(this);
-        members.add(member);
-    }
 
     public Long getId() {
         return id;
@@ -34,13 +32,5 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Member> getMembers() {
-        return members;
-    }
-
-    public void setMembers(List<Member> members) {
-        this.members = members;
     }
 }
